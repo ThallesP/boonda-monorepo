@@ -12,7 +12,7 @@ Whether you're sending files from your phone to your laptop or sharing them with
 
 Boonda determines how long a file link stays active based on the size of the uploaded file. This calculation uses a cubic transformation:
 
-min_age + (-max_age + min_age) * pow((file_size / max_size - 1), 3) 
+`min_age + (-max_age + min_age) * pow((file_size / max_size - 1), 3)`
 
 ensuring that smaller files remain accessible for longer periods, while larger files have shorter lifetimes.  
 Once you've uploaded your file, Boonda generates a unique link. Share this with your recipient to give them access to your file. The link remains active for a set period.
