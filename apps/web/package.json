@@ -23,7 +23,7 @@
     "geist": "^1.2.1",
     "lucide-react": "^0.368.0",
     "nanoid": "^5.0.7",
-    "next": "latest",
+    "next": "^14.2.2",
     "next-themes": "^0.3.0",
     "postcss": "8.4.33",
     "pushmodal": "^1.0.3",
