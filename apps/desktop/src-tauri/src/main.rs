@@ -18,8 +18,8 @@ fn main() {
         .plugin(tauri_plugin_clipboard_manager::init())
         .plugin(tauri_plugin_positioner::init())
         .setup(|app| {
-            let quit = MenuItemBuilder::with_id("quit", "Quit").build(app)?;
             let login = MenuItemBuilder::with_id("login", "Login").build(app)?;
+            let quit = MenuItemBuilder::with_id("quit", "Quit").build(app)?;
             let menu = MenuBuilder::new(app).items(&[&login, &quit]).build()?;
             TrayIconBuilder::new()
                 .menu(&menu)
