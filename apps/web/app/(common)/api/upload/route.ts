@@ -2,6 +2,7 @@ import { createClient } from "@supabase/supabase-js";
 import { z } from "zod";
 import { nanoid } from "nanoid";
 import { calculateRetention } from "@/app/utils/calculateRetention";
+import { Database } from "@/lib/database.types";
 
 const body = z.object({
   name: z.string(),
@@ -30,7 +31,7 @@ export async function POST(request: Request) {
 
   const { name, sizeInBytes } = body.parse(await request.json());
 
-  const client = createClient(
+  const client = createClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_KEY!
   );
@@ -60,6 +61,23 @@ export async function POST(request: Request) {
   const expiresAt = new Date(Date.now() + retention).getTime();
 
   const url = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/files/${generatedFileName}`;
+
+  const { error } = await client.from("files").insert({
+    expiresAt: new Date(expiresAt).toISOString(),
+    name: generatedFileName,
+  });
+
+  if (error) {
+    console.error(error);
+    return new Response(
+      JSON.stringify({
+        error: "Failed to insert file into the database",
+      }),
+      {
+        status: 400,
+      }
+    );
+  }
 
   return new Response(JSON.stringify({ uploadInfo, expiresAt, url }), {
     status: 200,
