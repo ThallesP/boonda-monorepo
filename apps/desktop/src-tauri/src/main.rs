@@ -20,7 +20,7 @@ fn main() {
         .setup(|app| {
             let quit = MenuItemBuilder::with_id("quit", "Quit").build(app)?;
             let login = MenuItemBuilder::with_id("login", "Login").build(app)?;
-            let menu = MenuBuilder::new(app).items(&[&quit, &login]).build()?;
+            let menu = MenuBuilder::new(app).items(&[&login, &quit]).build()?;
             TrayIconBuilder::new()
                 .menu(&menu)
                 .on_menu_event(move |app, event| match event.id().as_ref() {
