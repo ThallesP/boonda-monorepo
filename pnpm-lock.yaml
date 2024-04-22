@@ -35,6 +35,9 @@ importers:
       '@tauri-apps/api':
         specifier: '>=2.0.0-beta.0'
         version: 2.0.0-beta.8
+      '@tauri-apps/cli':
+        specifier: 2.0.0-beta.13
+        version: 2.0.0-beta.13
       '@tauri-apps/plugin-clipboard-manager':
         specifier: '>=2.0.0-beta.0'
         version: 2.0.0-beta.2
@@ -69,9 +72,6 @@ importers:
         specifier: ^3.23.0
         version: 3.23.0
     devDependencies:
-      '@tauri-apps/cli':
-        specifier: 2.0.0-beta.13
-        version: 2.0.0-beta.13
       '@types/react':
         specifier: ^18.2.15
         version: 18.2.48
@@ -1361,7 +1361,7 @@ packages:
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
-    dev: true
+    dev: false
     optional: true
 
   /@tauri-apps/cli-darwin-x64@2.0.0-beta.13:
@@ -1370,7 +1370,7 @@ packages:
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
-    dev: true
+    dev: false
     optional: true
 
   /@tauri-apps/cli-linux-arm-gnueabihf@2.0.0-beta.13:
@@ -1379,7 +1379,7 @@ packages:
     cpu: [arm]
     os: [linux]
     requiresBuild: true
-    dev: true
+    dev: false
     optional: true
 
   /@tauri-apps/cli-linux-arm64-gnu@2.0.0-beta.13:
@@ -1388,7 +1388,7 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
-    dev: true
+    dev: false
     optional: true
 
   /@tauri-apps/cli-linux-arm64-musl@2.0.0-beta.13:
@@ -1397,7 +1397,7 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
-    dev: true
+    dev: false
     optional: true
 
   /@tauri-apps/cli-linux-x64-gnu@2.0.0-beta.13:
@@ -1406,7 +1406,7 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
-    dev: true
+    dev: false
     optional: true
 
   /@tauri-apps/cli-linux-x64-musl@2.0.0-beta.13:
@@ -1415,7 +1415,7 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
-    dev: true
+    dev: false
     optional: true
 
   /@tauri-apps/cli-win32-arm64-msvc@2.0.0-beta.13:
@@ -1424,7 +1424,7 @@ packages:
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
-    dev: true
+    dev: false
     optional: true
 
   /@tauri-apps/cli-win32-ia32-msvc@2.0.0-beta.13:
@@ -1433,7 +1433,7 @@ packages:
     cpu: [ia32]
     os: [win32]
     requiresBuild: true
-    dev: true
+    dev: false
     optional: true
 
   /@tauri-apps/cli-win32-x64-msvc@2.0.0-beta.13:
@@ -1442,7 +1442,7 @@ packages:
     cpu: [x64]
     os: [win32]
     requiresBuild: true
-    dev: true
+    dev: false
     optional: true
 
   /@tauri-apps/cli@2.0.0-beta.13:
@@ -1460,7 +1460,7 @@ packages:
       '@tauri-apps/cli-win32-arm64-msvc': 2.0.0-beta.13
       '@tauri-apps/cli-win32-ia32-msvc': 2.0.0-beta.13
       '@tauri-apps/cli-win32-x64-msvc': 2.0.0-beta.13
-    dev: true
+    dev: false
 
   /@tauri-apps/plugin-clipboard-manager@2.0.0-beta.2:
     resolution: {integrity: sha512-yue7KTO9r9rlpgjcyRB9xcMyZKTrGOP2bWQnL/EoyVkECsr+8e8W8UMlvajXjv1hinFoiycXJe6GaSTPGO0Jlg==}
