@@ -1,18 +1,9 @@
 import { Database } from "@/lib/database.types";
 import { createClient } from "@supabase/supabase-js";
-import { z } from "zod";
 
-const InsertFileBody = z.object({
-  type: z.literal("INSERT"),
-  table: z.literal("objects"),
-  record: z.object({
-    id: z.string(),
-    name: z.string(),
-  }),
-});
 export async function POST(request: Request) {
   if (
-    request.headers.get("authorization") !== process.env.SUPABASE_SERVICE_KEY
+    request.headers.get("authorization") !== `Bearer ${process.env.CRON_SECRET}`
   ) {
     return new Response(
       JSON.stringify({
@@ -24,27 +15,38 @@ export async function POST(request: Request) {
     );
   }
 
-  const { record } = InsertFileBody.parse(await request.json());
   const client = createClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_KEY!
   );
 
-  const { error } = await client
+  const { data, error } = await client
     .from("files")
-    .update({ object_id: record.id })
-    .eq("name", record.name);
+    .select()
+    .not("object_id", "is", null)
+    .lt("expiresAt", new Date().toISOString());
 
   if (error) {
     return new Response(
       JSON.stringify({
-        error: "Failed to update file",
+        error: "Failed to cleanup files",
       }),
       {
         status: 400,
       }
     );
   }
+
+  await Promise.all([
+    client
+      .from("files")
+      .delete()
+      .eq(
+        "id",
+        data.map((file) => file.id)
+      ),
+    client.storage.from("files").remove(data.map((file) => file.name)),
+  ]);
 
   return new Response(null, { status: 204 });
 }
