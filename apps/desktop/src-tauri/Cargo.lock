@@ -3664,8 +3664,7 @@ dependencies = [
 [[package]]
 name = "tauri-plugin-positioner"
 version = "2.0.0-beta.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f42eaaa46587fb9b5091633832c319939d7c52ac9faec15e8b17f12d7c7b562a"
+source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v2#cdd3aafdc671d1336fb190f6cdc198ca0e4f45a2"
 dependencies = [
  "log",
  "serde",

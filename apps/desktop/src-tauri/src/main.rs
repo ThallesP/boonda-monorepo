@@ -33,6 +33,7 @@ fn main() {
                     _ => (),
                 })
                 .on_tray_icon_event(|tray, event| {
+                    tauri_plugin_positioner::on_tray_event(tray.app_handle(), &event);
                     if event.click_type == ClickType::Left {
                         let window = tray.app_handle().get_webview_window("main").unwrap();
                         // use TrayCenter as initial window position
@@ -41,7 +42,7 @@ fn main() {
                             .unwrap()
                             .as_ref()
                             .window()
-                            .move_window(Position::BottomCenter)
+                            .move_window(Position::TrayCenter)
                             .unwrap();
                         if window.is_visible().unwrap() {
                             window.hide().unwrap();
