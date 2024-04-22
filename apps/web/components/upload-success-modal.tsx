@@ -1,18 +1,18 @@
-'use client';
+"use client";
 
-import { Check, Copy } from 'lucide-react';
-import { Button } from './ui/button';
+import { Check, Copy } from "lucide-react";
+import { Button } from "./ui/button";
 import {
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from './ui/dialog';
-import { Input } from './ui/input';
-import { Label } from './ui/label';
-import clipboard from 'clipboardy';
-import { useRef, useState } from 'react';
-import { toast } from 'sonner';
+} from "./ui/dialog";
+import { Input } from "./ui/input";
+import { Label } from "./ui/label";
+import { writeText } from "@tauri-apps/plugin-clipboard-manager";
+import { useRef, useState } from "react";
+import { toast } from "sonner";
 
 type UploadSuccessModalProps = {
   fileURL: string;
@@ -28,9 +28,9 @@ export function UploadSuccessModal({ fileURL }: UploadSuccessModalProps) {
       clearTimeout(copiedTimeoutRef.current);
     }
 
-    await clipboard.write(fileURL);
+    await writeText(fileURL);
     setIsCopied(true);
-    toast.success('Copied to clipboard');
+    toast.success("Copied to clipboard");
     const t = setTimeout(() => {
       setIsCopied(false);
     }, 3000);
