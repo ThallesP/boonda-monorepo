@@ -42,15 +42,6 @@ export default function DownloadPage() {
             Windows
           </Link>
         </Button>
-        <Button className="flex gap-3" size="lg" asChild>
-          <Link
-            href="https://github.com/get-boonda/boonda-desktop/releases/download/app-v0.0.1/boonda_0.0.1_amd64.AppImage"
-            download
-          >
-            <FaLinux size={24} />
-            Linux
-          </Link>
-        </Button>
       </div>
       <div className="w-full container relative pt-24 group">
         <div
