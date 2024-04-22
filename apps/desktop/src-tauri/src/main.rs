@@ -5,53 +5,57 @@ use std::sync::Mutex;
 use actix_cors::Cors;
 use actix_web::{web, App, HttpServer};
 use serde::{Deserialize, Serialize};
-use tauri::CustomMenuItem;
-use tauri::SystemTrayMenu;
-use tauri::{Manager, SystemTray, SystemTrayEvent};
+use tauri::menu::MenuBuilder;
+use tauri::menu::MenuItemBuilder;
+use tauri::tray::ClickType;
+use tauri::tray::TrayIconBuilder;
+use tauri::Manager;
 use tauri_plugin_positioner::Position;
 use tauri_plugin_positioner::WindowExt;
 
 fn main() {
-    let tray = SystemTray::new().with_menu(
-        SystemTrayMenu::new()
-            .add_item(CustomMenuItem::new("login", "Login"))
-            .add_item(CustomMenuItem::new("quit", "Quit")),
-    );
     tauri::Builder::default()
+        .plugin(tauri_plugin_clipboard_manager::init())
         .plugin(tauri_plugin_positioner::init())
-        .system_tray(tray)
+        .setup(|app| {
+            let quit = MenuItemBuilder::with_id("quit", "Quit").build(app)?;
+            let login = MenuItemBuilder::with_id("login", "Login").build(app)?;
+            let menu = MenuBuilder::new(app).items(&[&quit, &login]).build()?;
+            TrayIconBuilder::new()
+                .menu(&menu)
+                .on_menu_event(move |app, event| match event.id().as_ref() {
+                    "login" => {
+                        let _ = app.emit("login-requested", "");
+                    }
+                    "quit" => {
+                        app.exit(0);
+                    }
+                    _ => (),
+                })
+                .on_tray_icon_event(|tray, event| {
+                    if event.click_type == ClickType::Left {
+                        let window = tray.app_handle().get_webview_window("main").unwrap();
+                        // use TrayCenter as initial window position
+                        tray.app_handle()
+                            .get_webview_window("main")
+                            .unwrap()
+                            .as_ref()
+                            .window()
+                            .move_window(Position::BottomCenter)
+                            .unwrap();
+                        if window.is_visible().unwrap() {
+                            window.hide().unwrap();
+                        } else {
+                            window.show().unwrap();
+                            window.set_focus().unwrap();
+                        }
+                    }
+                })
+                .build(app)?;
+
+            Ok(())
+        })
         .invoke_handler(tauri::generate_handler![setup_callback])
-        .on_menu_event(|event| {
-            println!("{}", event.menu_item_id());
-        })
-        .on_system_tray_event(|app, event| match event {
-            SystemTrayEvent::LeftClick {
-                position: _,
-                size: _,
-                ..
-            } => {
-                tauri_plugin_positioner::on_tray_event(app, &event);
-                let window = app.get_window("main").unwrap();
-                // use TrayCenter as initial window position
-                let _ = window.move_window(Position::TrayCenter);
-                if window.is_visible().unwrap() {
-                    window.hide().unwrap();
-                } else {
-                    window.show().unwrap();
-                    window.set_focus().unwrap();
-                }
-            }
-            SystemTrayEvent::MenuItemClick { id, .. } => match id.as_str() {
-                "login" => {
-                    let _ = app.emit_all("login-requested", "");
-                }
-                "quit" => {
-                    app.exit(0);
-                }
-                _ => {}
-            },
-            _ => {}
-        })
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
@@ -71,7 +75,7 @@ async fn callback(info: web::Json<TokenData>, state: web::Data<AppState>) -> Str
         .app_handle
         .lock()
         .unwrap()
-        .emit_all("login-tokens", info.clone())
+        .emit("login-tokens", info.clone())
         .unwrap();
 
     "Success!".to_string()

@@ -1,60 +1,38 @@
 {
+  "productName": "Boonda",
+  "version": "0.0.0",
+  "identifier": "app.bonda.desktop",
   "build": {
     "beforeDevCommand": "pnpm dev",
+    "devUrl": "http://localhost:1420",
     "beforeBuildCommand": "pnpm build",
-    "devPath": "http://localhost:1420",
-    "distDir": "../dist"
+    "frontendDist": "../dist"
   },
-  "package": {
-    "productName": "Boonda",
-    "version": "0.0.1"
-  },
-  "tauri": {
-    "systemTray": {
-      "iconPath": "icons/icon.png",
-      "iconAsTemplate": true
-    },
-    "allowlist": {
-      "all": false,
-      "shell": {
-        "all": false,
-        "open": true
-      },
-      "window": {
-        "hide": true,
-        "close": true
-      },
-      "clipboard": {
-        "all": true,
-        "writeText": true,
-        "readText": true
-      }
-    },
+  "app": {
     "windows": [
       {
         "title": "Boonda",
         "width": 250,
+        "height": 310,
         "visible": false,
         "alwaysOnTop": true,
         "decorations": false,
-        "fileDropEnabled": false,
-        "height": 310
+        "dragDropEnabled": false
       }
     ],
     "security": {
       "csp": null
-    },
-    "bundle": {
-      "active": true,
-      "targets": "all",
-      "identifier": "app.bonda.desktop",
-      "icon": [
-        "icons/32x32.png",
-        "icons/128x128.png",
-        "icons/128x128@2x.png",
-        "icons/icon.icns",
-        "icons/icon.ico"
-      ]
     }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
   }
 }
