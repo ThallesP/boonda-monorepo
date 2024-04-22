@@ -19,7 +19,7 @@ export default function DownloadPage() {
   return (
     <div className="flex-1 w-full flex flex-col items-center">
       <div className="py-24">
-        <h1 className="text-5xl">
+        <h1 className="text-5xl text-center">
           Get <span className="font-bold inline-block">Boonda</span> on your
           platform
         </h1>
