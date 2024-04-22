@@ -10,7 +10,7 @@ import {
 } from "./ui/dialog";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { writeText } from "@tauri-apps/plugin-clipboard-manager";
+import clipboardy from "clipboardy";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 
@@ -28,7 +28,7 @@ export function UploadSuccessModal({ fileURL }: UploadSuccessModalProps) {
       clearTimeout(copiedTimeoutRef.current);
     }
 
-    await writeText(fileURL);
+    await clipboardy.write(fileURL);
     setIsCopied(true);
     toast.success("Copied to clipboard");
     const t = setTimeout(() => {
