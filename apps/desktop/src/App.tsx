@@ -3,13 +3,11 @@ import { UploadComponent } from "./components/upload-component";
 import { TanStackQueryProvider } from "./providers/tanstack-query-provider";
 import { X } from "lucide-react";
 import { listen } from "@tauri-apps/api/event";
-import { Window } from "@tauri-apps/api/window";
-import { open } from "@tauri-apps/plugin-shell";
-import { invoke } from "@tauri-apps/api/core";
+import { appWindow } from "@tauri-apps/api/window";
+import { open } from "@tauri-apps/api/shell";
+import { invoke } from "@tauri-apps/api";
 import { createClient } from "./utils/supabase/client";
 import { DEFAULT_URL } from "./lib/constants";
-
-const appWindow = new Window("main");
 
 export type Tokens = {
   payload: {

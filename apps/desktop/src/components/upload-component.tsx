@@ -12,7 +12,7 @@ import { Loader } from "lucide-react";
 import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 import { MAX_ANON_SIZE_BYTES, MAX_LOGGED_SIZE_BYTES } from "@/lib/constants";
-import { writeText } from "@tauri-apps/plugin-clipboard-manager";
+import { writeText } from "@tauri-apps/api/clipboard";
 import { useRef, useState } from "react";
 import { Copy, Check } from "lucide-react";
 import { Input } from "./ui/input";
